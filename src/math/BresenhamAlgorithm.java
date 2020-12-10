@@ -1,52 +1,34 @@
 package math;
 
-import static java.lang.Math.abs;
+import java.util.List;
 
 public class BresenhamAlgorithm {
 
-    public Boolean[] doReflection(Point point1, Point point2) {
-        Boolean switchXY = false;
-        Boolean switchX = false;
-        Boolean switchY = false;
+    public void calculatePoints(Point p1, Point p2, List<Point> allPoints) {
 
-        Float m = calculateM(point1, point2);
+        SignalInverter.invertSignal(p1, p2);
 
-        if((m > 1) || (m < -1)) {
-            Integer temp = point1.getX();
-            point1.setX(point2.getX());
-            point2.setX(temp);
+        Calculator calculator = new Calculator();
 
-            temp = point1.getY();
-            point1.setY(point2.getY());
-            point2.setY(temp);
+        Boolean[] switches = calculator.doReflection(p1, p2);
+        float m = calculator.calculateM(p1, p2);
+        float e = calculator.calculateE(m);
 
-            switchXY = true;
-        }
+        int x = p1.getX();
+        int y = p1.getY();
 
-        if(point1.getX() > point2.getX()) {
-            point1.setX(point1.getX() * -1);
-            point2.setX(point2.getX() * -1);
+        allPoints.add(p1);
 
-            switchX = true;
-        }
+        do {
+            if(e >= 0) {
+                y++;
+                e--;
+            }
+            x++;
+            e += m;
+            allPoints.add(new Point(x, y));
+        } while (x < p2.getX());
 
-        if(point1.getY() > point2.getY()) {
-            point1.setY(point1.getY() * -1);
-            point2.setY(point2.getY() * -1);
-
-            switchY = true;
-        }
-
-        return new Boolean[] {switchXY, switchX, switchY};
-    }
-
-    public Float calculateM(Point point1, Point point2) {
-        Float m = (float)  abs(point2.getY() - point1.getY()) / abs(point2.getX() - point1.getX());
-        return m;
-    }
-
-    public Float calculateE(float m) {
-        Float e = (float) (m - 0.5);
-        return e;
+        calculator.undoReflection(allPoints, switches);
     }
 }
