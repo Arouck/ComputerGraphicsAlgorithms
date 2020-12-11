@@ -1,6 +1,7 @@
 package GUI;
 
 import Exceptions.ValueException;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
@@ -12,6 +13,8 @@ import math.Point;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class Controller {
 
@@ -32,6 +35,8 @@ public class Controller {
     public void printPoints() {
         try {
             initAllPoints();
+
+            ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
             int valueX1 = Integer.parseInt(pointX1.getText());
             int valueY1 = Integer.parseInt(pointY1.getText());
@@ -57,17 +62,22 @@ public class Controller {
 
             bresenhamAlgorithm.calculatePoints(p1, p2, linePoints);
 
-            GraphicsContext gc = drawCanvas.getGraphicsContext2D();
-            PixelWriter pw = gc.getPixelWriter();
             Color color = Color.rgb(0, 0, 0, 1.0);
 
-            for(Point point : linePoints) {
-                pw.setColor(point.getX(), point.getY(), color);
-                allPoints.add(point);
-            }
+            drawPoints(color, linePoints);
 
         } catch(ValueException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void drawPoints(Color color, List<Point> points) {
+        GraphicsContext gc = drawCanvas.getGraphicsContext2D();
+        PixelWriter pw = gc.getPixelWriter();
+
+        for(Point point : points) {
+            pw.setColor(point.getX(), point.getY(), color);
+            allPoints.add(point);
         }
     }
 
@@ -76,12 +86,10 @@ public class Controller {
         initAllPoints();
 
         List<Point> copyAllPoints = new ArrayList<>(allPoints);
-        GraphicsContext gc = drawCanvas.getGraphicsContext2D();
-        PixelWriter pw = gc.getPixelWriter();
         Color color = Color.rgb(255, 255, 255, 1.0);
 
         for(Point point : copyAllPoints) {
-            pw.setColor(point.getX(), point.getY(), color);
+            drawPoints(color, copyAllPoints);
             allPoints.remove(point);
         }
     }
