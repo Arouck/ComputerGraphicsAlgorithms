@@ -42,4 +42,8 @@ public class ControllerUtils {
         yMaxValue.setText(String.valueOf(drawCanvas.getHeight()/2));
         yMinValue.setText(String.valueOf(-drawCanvas.getHeight()/2));
     }
+
+    public  void setMaxValue(Canvas drawCanvas, Label maxValue) {
+        maxValue.setText(String.valueOf(drawCanvas.getWidth()/2));
+    }
 }
