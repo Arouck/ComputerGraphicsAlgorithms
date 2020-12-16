@@ -63,7 +63,7 @@ public class BresenhamAlgorithm {
         this.setyMaxValue((int) drawCanvas.getHeight()/2);
         this.setyMinValue((int) -drawCanvas.getHeight()/2);
 
-        ExceptionHandler.valueException(valueX1, valueY1, valueX2, valueY2,
+        ExceptionHandler.xAndYException(valueX1, valueY1, valueX2, valueY2,
                 xMaxValue, yMaxValue, xMinValue, yMinValue);
     }
 
