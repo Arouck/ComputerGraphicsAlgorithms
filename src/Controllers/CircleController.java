@@ -1,7 +1,6 @@
 package Controllers;
 
-import Algorithms.BresenhamAlgorithm;
-import Algorithms.CircleAndEllipseAlgorithm;
+import Algorithms.CircleAlgorithm;
 import Exceptions.ValueException;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -29,7 +28,14 @@ public class CircleController {
     @FXML
     private Button backButton;
     @FXML
-    private Label maxValue;
+    private Label xMaxValue;
+    @FXML
+    private Label yMaxValue;
+    @FXML
+    private Label yMinValue;
+    @FXML
+    private Label xMinValue;
+
 
     private List<Point> allPoints = new ArrayList<>();;
 
@@ -37,15 +43,15 @@ public class CircleController {
     public void initialize() {
         ControllerUtils controllerUtils = new ControllerUtils();
         controllerUtils.setBackButtonActionListener(backButton);
-        controllerUtils.setMaxValue(drawCanvas, maxValue);
+        controllerUtils.setMaxAndMinValues(drawCanvas, xMaxValue, xMinValue, yMaxValue, yMinValue);
     }
 
     @FXML
     public void printPoints() {
         try {
-            CircleAndEllipseAlgorithm circleAndEllipseAlgorithm = new CircleAndEllipseAlgorithm();
-            circleAndEllipseAlgorithm.verifyValueException(pointXc, pointYc, radius, drawCanvas);
-            List<Point> allPoints = circleAndEllipseAlgorithm.start();
+            CircleAlgorithm circleAlgorithm = new CircleAlgorithm();
+            circleAlgorithm.verifyValueException(pointXc, pointYc, radius, drawCanvas);
+            List<Point> allPoints = circleAlgorithm.start();
 
             Color color = Color.rgb(0, 0, 0, 1.0);
             drawPoints(color, allPoints);

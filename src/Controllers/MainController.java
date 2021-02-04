@@ -22,6 +22,14 @@ public class MainController {
     List<String> ALGORITHMS = new ArrayList<String>() {{
         add("Bresenham");
         add("Polylines");
+        add("Circulo");
+        add("Curve");
+        add("Preenchimento-Polylines");
+        add("Preenchimento-Circulo");
+        add("Varredura");
+        add("Recorte-De-Linha");
+        add("Recorte-De-Poligonos");
+        add("Translacao");
     }};
 
     ObservableList<String> algorithmChoices = FXCollections.observableArrayList();

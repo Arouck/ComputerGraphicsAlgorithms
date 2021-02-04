@@ -1,15 +1,8 @@
 package Controllers;
 
 import Algorithms.BresenhamAlgorithm;
-import Exceptions.ExceptionHandler;
 import Exceptions.ValueException;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -17,14 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import math.Point;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PolylinesController {
+public class TranslacaoController {
 
     @FXML
     private TextField pointX1;
@@ -34,6 +25,10 @@ public class PolylinesController {
     private TextField pointX2;
     @FXML
     private TextField pointY2;
+    @FXML
+    private TextField pointXTranslacao;
+    @FXML
+    private TextField pointYTranslacao;
     @FXML
     private Canvas drawCanvas;
     @FXML
@@ -53,37 +48,39 @@ public class PolylinesController {
     public void initialize() {
         ControllerUtils controllerUtils = new ControllerUtils();
         controllerUtils.setBackButtonActionListener(backButton);
-        controllerUtils.setMaxAndMinValues(drawCanvas, xMaxValue, xMinValue, yMaxValue, yMinValue);
+        controllerUtils.setMaxAndMinValues2(drawCanvas, xMaxValue, xMinValue, yMaxValue, yMinValue);
     }
 
     @FXML
     public void calculatePoints() {
-        try {
-            BresenhamAlgorithm bresenhamAlgorithm = new BresenhamAlgorithm();
-            bresenhamAlgorithm.verifyValueException(pointX1, pointY1, pointX2, pointY2, drawCanvas);
-            List<Point> linePoints = bresenhamAlgorithm.start();
+        BresenhamAlgorithm bresenhamAlgorithm = new BresenhamAlgorithm();
+        List<Point> linePoints = new ArrayList<>();
+        Point p1 = new Point(
+                Integer.parseInt(pointX1.getText()),
+                Integer.parseInt(pointY1.getText())
+        );
+        Point p2 = new Point(
+                Integer.parseInt(pointX2.getText()),
+                Integer.parseInt(pointY2.getText())
+        );
+        bresenhamAlgorithm.calculateLinePoints(p1, p2, linePoints);
 
-            allPoints.addAll(linePoints);
+        allPoints.addAll(linePoints);
 
-            resetTextFields(pointX2.getText(), pointY2.getText(), true);
-
-        } catch(ValueException ex) {
-            ex.printStackTrace();
-        }
+        resetTextFields(pointX2.getText(), pointY2.getText());
     }
 
-    public void resetTextFields(String pointx1, String pointy1, boolean disabled){
+    public void resetTextFields(String pointx1, String pointy1){
         pointX1.setText(pointx1);
         pointY1.setText(pointy1);
-        pointX1.setDisable(disabled);
-        pointY1.setDisable(disabled);
+        pointX1.setDisable(true);
+        pointY1.setDisable(true);
         pointX2.setText("");
         pointY2.setText("");
     }
 
     @FXML
     public void drawLines() {
-        calculatePoints();
         GraphicsContext gc = drawCanvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         Color color = Color.rgb(0, 0, 0, 1.0);
@@ -94,8 +91,19 @@ public class PolylinesController {
     }
 
     @FXML
+    public void aplicarTranslacao() {
+        Point translacao = new Point(Integer.parseInt(pointXTranslacao.getText()),
+                Integer.parseInt(pointYTranslacao.getText()));
+
+        cleanPoints();
+        for(Point point : allPoints) {
+            point.setX(point.getX() + translacao.getX());
+            point.setY(point.getY() + translacao.getY());
+        }
+        drawLines();
+    }
+
     public void cleanPoints() {
-        resetTextFields("", "", false);
         GraphicsContext gc = drawCanvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         List<Point> copyAllPoints = new ArrayList<>(allPoints);
@@ -103,7 +111,6 @@ public class PolylinesController {
 
         for(Point point : copyAllPoints) {
             pw.setColor(point.getX(), point.getY(), color);
-            allPoints.remove(point);
         }
     }
 }

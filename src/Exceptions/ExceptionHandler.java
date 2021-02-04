@@ -43,10 +43,10 @@ public class ExceptionHandler {
     public static void circleValuesException(int radius, int valueXCenter, int valueYCenter,
                                              int WIDTH, int HEIGHT) throws ValueException {
 
-        if ((radius > WIDTH + valueXCenter) || (radius > HEIGHT + valueYCenter)) {
+        if ((radius + valueXCenter > WIDTH ) || (radius + valueYCenter > HEIGHT)) {
             throw new ValueException("O valor do raio é maior que o valor máximo.");
         } else {
-            if((radius < -WIDTH - valueXCenter) || (radius < -HEIGHT - valueYCenter)) {
+            if((valueXCenter - radius < -WIDTH) || (valueYCenter - radius < -HEIGHT)) {
                 throw new ValueException("O valor do raio é menor o valor mínimo.");
             }
         }

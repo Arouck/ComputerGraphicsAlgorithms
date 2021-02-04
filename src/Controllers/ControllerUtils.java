@@ -43,7 +43,18 @@ public class ControllerUtils {
         yMinValue.setText(String.valueOf(-drawCanvas.getHeight()/2));
     }
 
-    public  void setMaxValue(Canvas drawCanvas, Label maxValue) {
-        maxValue.setText(String.valueOf(drawCanvas.getWidth()/2));
+    public  void setMaxAndMinValues2(Canvas drawCanvas, Label xMaxValue, Label xMinValue,
+                                    Label yMaxValue, Label yMinValue) {
+        xMaxValue.setText(String.valueOf(drawCanvas.getWidth()));
+        xMinValue.setText(String.valueOf(0));
+        yMaxValue.setText(String.valueOf(drawCanvas.getHeight()));
+        yMinValue.setText(String.valueOf(0));
     }
+
+   /* public  void setMaxValue(Canvas drawCanvas, Label xMaxValue, Label yMaxValue, Label yMinValue, Label xMinValue) {
+        xMaxValue.setText(String.valueOf(drawCanvas.getWidth()/2));
+        xMinValue.setText("-"+xMaxValue.getText());
+        yMaxValue.setText(String.valueOf(drawCanvas.getHeight()/2));
+        yMinValue.setText("-"+yMaxValue.getText());
+    }*/
 }

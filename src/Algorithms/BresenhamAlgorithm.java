@@ -51,6 +51,36 @@ public class BresenhamAlgorithm {
         calculator.undoReflection(allPoints, switches);
     }
 
+    public void calculateLinePoints(Point p1, Point p2, List<Point> allPoints) {
+
+        //SignalInverter.invertSignal(p1, p2);
+
+        Calculator calculator = new Calculator();
+
+        Point aux2 = new Point(p2.getX(), p2.getY());
+
+        Boolean[] switches = calculator.doReflection(p1, aux2);
+        float m = calculator.calculateM(p1, aux2);
+        float e = calculator.calculateE(m);
+
+        int x = p1.getX();
+        int y = p1.getY();
+
+        allPoints.add(p1);
+
+        do {
+            if(e >= 0) {
+                y++;
+                e--;
+            }
+            x++;
+            e += m;
+            allPoints.add(new Point(x, y));
+        } while (x < aux2.getX());
+
+        calculator.undoReflection(allPoints, switches);
+    }
+
     public void verifyValueException(TextField pointX1, TextField pointY1, TextField pointX2,
                                 TextField pointY2, Canvas drawCanvas) throws ValueException {
         this.setValueX1(Integer.parseInt(pointX1.getText()));
@@ -68,6 +98,7 @@ public class BresenhamAlgorithm {
     }
 
     public List<Point> start() {
+
         Point p1 = new Point(valueX1 + xMaxValue,
                 valueY1 + yMinValue);
         Point p2 = new Point(valueX2 + xMaxValue,
