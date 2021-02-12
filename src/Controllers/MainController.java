@@ -30,6 +30,8 @@ public class MainController {
         add("Recorte-De-Linha");
         add("Recorte-De-Poligonos");
         add("Translacao");
+        add("Escala");
+        add("Rotacao");
     }};
 
     ObservableList<String> algorithmChoices = FXCollections.observableArrayList();
