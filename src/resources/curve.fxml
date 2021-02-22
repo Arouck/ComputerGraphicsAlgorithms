@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="715.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.EscalaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="715.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CurveController">
    <center>
       <Pane fx:id="drawPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="668.0" stylesheets="@../styles/DrawArea.css" BorderPane.alignment="CENTER">
          <children>
@@ -143,18 +143,32 @@
                      </TextField>
                   </children>
                </VBox>
-               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="120.0" prefWidth="168.0">
+               <VBox prefHeight="200.0" prefWidth="125.0">
                   <children>
-                     <Button mnemonicParsing="false" onAction="#calculatePoints" prefWidth="100.0" text="Guardar" textAlignment="CENTER">
+                     <Label text="X controle">
                         <VBox.margin>
-                           <Insets />
+                           <Insets bottom="5.0" left="25.0" top="20.0" />
                         </VBox.margin>
-                     </Button>
-                     <Button mnemonicParsing="false" onAction="#drawLines" prefWidth="100.0" text="Desenhar" textAlignment="CENTER">
+                     </Label>
+                     <TextField fx:id="pointXcontrol" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0">
                         <VBox.margin>
-                           <Insets top="2.0" />
+                           <Insets left="25.0" />
                         </VBox.margin>
-                     </Button>
+                     </TextField>
+                  </children>
+               </VBox>
+               <VBox prefHeight="200.0" prefWidth="125.0">
+                  <children>
+                     <Label text="Y controle">
+                        <VBox.margin>
+                           <Insets bottom="5.0" left="25.0" top="20.0" />
+                        </VBox.margin>
+                     </Label>
+                     <TextField fx:id="pointYcontrol" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0">
+                        <VBox.margin>
+                           <Insets left="25.0" />
+                        </VBox.margin>
+                     </TextField>
                   </children>
                </VBox>
             </HBox>
@@ -162,45 +176,29 @@
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" maxHeight="75.0" minHeight="10.0" prefHeight="10.0" prefWidth="100.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Escala X" />
-                  <TextField fx:id="escalaX" maxWidth="75.0" prefWidth="75.0" />
+                  <Button fx:id="backButton" mnemonicParsing="false" prefWidth="100.0" text="Voltar" />
+                  <Button mnemonicParsing="false" onAction="#cleanPoints" prefWidth="100.0" text="Apagar">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#printPoints" prefWidth="100.0" text="Desenhar" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#addControlPoints" prefHeight="25.0" prefWidth="171.0" text="Adicionar ponto de controle" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
-            </VBox>
-            <VBox alignment="CENTER" maxHeight="75.0" minHeight="10.0" prefHeight="10.0" prefWidth="100.0">
-               <children>
-                  <Label text="Escala Y" />
-                  <TextField fx:id="escalaY" maxWidth="75.0" />
-               </children>
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-            </VBox>
-            <Button fx:id="backButton" mnemonicParsing="false" prefWidth="100.0" text="Voltar">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin></Button>
-            <Button mnemonicParsing="false" onAction="#aplicarEscala" prefWidth="100.0" text="Realizar escala">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-            </Button>
-            <VBox alignment="CENTER" maxHeight="75.0" minHeight="10.0" prefHeight="10.0" prefWidth="100.0">
-               <children>
-                  <Label text="Px" />
-                  <TextField fx:id="pontoX" maxWidth="75.0" prefWidth="75.0" />
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" maxHeight="75.0" minHeight="10.0" prefHeight="10.0" prefWidth="100.0">
-               <children>
-                  <Label text="Py" />
-                  <TextField fx:id="pontoY" maxWidth="75.0" prefWidth="75.0" />
-               </children>
-            </VBox>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </bottom>
 </BorderPane>

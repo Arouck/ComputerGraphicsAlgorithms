@@ -58,56 +58,6 @@ public class FloodFillAlgorithm {
         }
     }
 
-    public void colorPoints(int x, int y, List<Point> allPoints, List<Point> paintedPoints, GraphicsContext gc,
-                            Color color) {
-        ArrayList<Point> points = new ArrayList<>();
-        points.add(new Point(x, y));
-        PixelWriter pw = gc.getPixelWriter();
-        while(!points.isEmpty()) {
-            paintedPoints.add(points.get(points.size() - 1));
-            Point point = points.remove(points.size() - 1);
-            pw.setColor(point.getX(), point.getY(), color);
-
-            if(!checkValidity(point.getX() + 1, point.getY(), allPoints, paintedPoints)){
-                points.add(new Point(point.getX() + 1, point.getY()));
-            }
-            if(!checkValidity(point.getX(), point.getY() + 1, allPoints, paintedPoints)){
-                points.add(new Point(point.getX(), point.getY() + 1));
-            }
-            if(!checkValidity(point.getX(), point.getY() - 1, allPoints, paintedPoints)){
-                points.add(new Point(point.getX(), point.getY() - 1));
-            }
-            if(!checkValidity(point.getX() - 1, point.getY(), allPoints, paintedPoints)){
-                points.add(new Point(point.getX() - 1, point.getY()));
-            }
-        }
-    }
-
-    public boolean checkValidity(int x, int y, List<Point> allPoints, List<Point> paintedPoints) {
-        Point point = new Point(x, y);
-        boolean painted = false;
-        for(Point edgePoint : allPoints) {
-            if (edgePoint.equals(point)) {
-                painted = true;
-                break;
-            }
-        }
-        if(!painted) {
-            for(Point paintedPoint : paintedPoints) {
-                if (paintedPoint.equals(point)) {
-                    painted = true;
-                    break;
-                }
-            }
-        }
-
-        return painted;
-    }
-
-    public void verifyValueException(TextField pointX1, TextField pointY1, TextField pointX2,
-                                TextField pointY2, Canvas drawCanvas) throws ValueException {
-    }
-
     public void start(List<Point> allPoints, Point chosenPoint, GraphicsContext gc) {
         PixelWriter pixelWriter = gc.getPixelWriter();
         Color color = Color.rgb(0, 0, 0, 1.0);
@@ -116,7 +66,6 @@ public class FloodFillAlgorithm {
         }
         Color paintedColor = Color.rgb(168, 50, 50, 1.0);
         calculatePoints(allPoints, chosenPoint.getX(), chosenPoint.getY(), null, gc, paintedColor);
-        //colorPoints(chosenPoint.getX(), chosenPoint.getY(), allPoints, new ArrayList<>(), gc, paintedColor);
     }
 
     public int getxMaxValue() {

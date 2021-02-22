@@ -27,6 +27,10 @@ public class EscalaController {
     @FXML
     private TextField pointY2;
     @FXML
+    private TextField pontoX;
+    @FXML
+    private TextField pontoY;
+    @FXML
     private TextField escalaX;
     @FXML
     private TextField escalaY;
@@ -115,11 +119,19 @@ public class EscalaController {
 
         cleanPoints();
         ArrayList<Point> oldVertices = new ArrayList<>(vertices);
+        Point p = new Point(Integer.parseInt(pontoX.getText()),
+                Integer.parseInt(pontoY.getText()));
         for(int i = 0; i < vertices.size() - 1; i++) {
-            Point p1 = new Point((int) Math.round(vertices.get(i).getX() * x),
-                    (int) Math.round(vertices.get(i).getY() * y));
-            Point p2 = new Point((int) Math.round(vertices.get(i + 1).getX() * x),
-                    (int) Math.round(vertices.get(i + 1).getY() * y));
+            Point p1 = new Point(vertices.get(i).getX(), vertices.get(i).getY());
+            if(!p1.equals(p)){
+                p1.setX((int) Math.round(p1.getX() * x));
+                p1.setY((int) Math.round(p1.getY() * y));
+            }
+            Point p2 = new Point(vertices.get(i + 1).getX(), vertices.get(i + 1).getY());
+            if(!p2.equals(p)) {
+                p2.setX((int) Math.round(p2.getX() * x));
+                p2.setY((int) Math.round(p2.getY() * y));
+            }
             calculatePoints2(p1, p2);
         }
         drawLines();
